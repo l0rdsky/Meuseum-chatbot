@@ -1,2 +1,47 @@
 @import "tailwindcss";
 
+.input-container {
+  position: fixed;
+  bottom: 10px;
+  display: flex;
+  align-items: center;
+  padding: 10px 20px;
+  border-radius: 10px;
+  transition: width 0.3s ease;
+}
+
+.input-container.light-mode {
+  background: #fff;
+}
+
+.input-container.dark-mode {
+  background: #141414;
+}
+
+.input-container input {
+  background: #fff;
+  color: #000;
+}
+
+.input-container input::placeholder {
+  color: #000; /* Default placeholder color for light mode */
+}
+
+.input-container.dark-mode input {
+  background: #333;
+  color: #fff;
+}
+
+.input-container.dark-mode input::placeholder {
+  color: #fff; /* Placeholder color for dark mode */
+}
+
+.content-container {
+  overflow-y: auto;
+  scrollbar-width: none; /* For Firefox */
+}
+
+.content-container::-webkit-scrollbar {
+  display: none; /* For Chrome, Safari, and Opera */
+}
+
