@@ -23,7 +23,7 @@ This is the frontend for the Museum Chatbot Ticketing System built using React a
 ## Installation and Setup
 1. Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/l0rdsky/Meuseum-chatbot.git
     cd frontend
     ```
 
@@ -42,7 +42,7 @@ This is the frontend for the Museum Chatbot Ticketing System built using React a
 
 ## Project Structure
 
-frontend/
+```frontend/
 ├── public/
 ├── src/
 │   ├── api/               # For Axios API calls
@@ -51,7 +51,7 @@ frontend/
 │   ├── App.jsx
 │   └── main.jsx
 ├── index.html
-└── package.json
+└── package.json```
 
 
 ---

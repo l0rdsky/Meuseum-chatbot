@@ -25,7 +25,7 @@ This is the backend for the Museum Chatbot Ticketing System built using FastAPI 
 ## Installation and Setup
 1. Clone the repository:
     ```bash
-    git clone <repository-url>
+    git clone https://github.com/l0rdsky/Meuseum-chatbot.git
     cd backend
     ```
 
@@ -50,7 +50,7 @@ This is the backend for the Museum Chatbot Ticketing System built using FastAPI 
 
 ## Project Structure
 
-backend/
+```backend/
 ├── main.py                 # Entry point for FastAPI
 ├── models/                 # Database models
 ├── routes/                 # API routes
@@ -59,7 +59,7 @@ backend/
 │   └── payments.py         # Payment processing endpoints
 ├── services/               # Business logic and helper functions
 ├── utils/                  # Utility functions (e.g., database connection)
-└── requirements.txt        # Dependencies list
+└── requirements.txt        # Dependencies list```
 
 ---
 
