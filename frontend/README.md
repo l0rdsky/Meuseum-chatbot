@@ -42,7 +42,8 @@ This is the frontend for the Museum Chatbot Ticketing System built using React a
 
 ## Project Structure
 
-```frontend/
+```bash
+frontend/
 ├── public/
 ├── src/
 │   ├── api/               # For Axios API calls
@@ -51,7 +52,8 @@ This is the frontend for the Museum Chatbot Ticketing System built using React a
 │   ├── App.jsx
 │   └── main.jsx
 ├── index.html
-└── package.json```
+└── package.json
+```
 
 
 ---

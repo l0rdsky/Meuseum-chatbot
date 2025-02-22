@@ -50,7 +50,8 @@ This is the backend for the Museum Chatbot Ticketing System built using FastAPI 
 
 ## Project Structure
 
-```backend/
+```bash
+backend/
 ├── main.py                 # Entry point for FastAPI
 ├── models/                 # Database models
 ├── routes/                 # API routes
@@ -59,7 +60,8 @@ This is the backend for the Museum Chatbot Ticketing System built using FastAPI 
 │   └── payments.py         # Payment processing endpoints
 ├── services/               # Business logic and helper functions
 ├── utils/                  # Utility functions (e.g., database connection)
-└── requirements.txt        # Dependencies list```
+└── requirements.txt        # Dependencies list
+```bash
 
 ---
 
