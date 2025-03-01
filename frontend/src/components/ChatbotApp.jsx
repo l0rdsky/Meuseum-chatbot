@@ -1,116 +1,132 @@
 import { useState, useEffect, useRef } from 'react';
-import { Layout, Menu, Switch, Typography, Input, Button } from 'antd';
-import {
-  MessageOutlined,
-  HistoryOutlined,
-  SettingOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,
-  SendOutlined,
-  BulbOutlined,
-  BulbFilled
-} from '@ant-design/icons';
+import { Layout, Button } from 'antd';
+import { HomeOutlined } from '@ant-design/icons';
 import MessageBubble from './MessageBubble';
 import '../index.css';
 
-const { Header, Sider, Content } = Layout;
-const { Title } = Typography;
+const { Content, Footer } = Layout;
 
-const ChatbotApp = () => {
-  const [collapsed, setCollapsed] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
+const MuseumApp = () => {
   const [messages, setMessages] = useState([
     { text: 'Hello! How can I help you today?', isSent: false },
-    { text: 'I would like to know more about the museum.', isSent: true },
-    { text: 'Sure! The museum has a rich history and many exhibits.', isSent: false }
   ]);
   const [inputValue, setInputValue] = useState('');
   const messagesEndRef = useRef(null);
 
-  const toggleCollapsed = () => {
-    setCollapsed(!collapsed);
-  };
-
-  const toggleDarkMode = (checked) => {
-    setDarkMode(checked);
-  };
-
   const handleSendMessage = () => {
     if (inputValue.trim()) {
-      const newMessages = [...messages, { text: inputValue, isSent: true }];
-      setMessages(newMessages);
+      const userMessage = inputValue.trim();
+      setMessages((prevMessages) => [...prevMessages, { text: userMessage, isSent: true }]);
       setInputValue('');
-
-      // Hardcoded response
+  
+      // Show "Bot is typing..."
       setTimeout(() => {
-        const response = getResponse(inputValue);
-        setMessages([...newMessages, { text: response, isSent: false }]);
-      }, 500);
+        setMessages((prevMessages) => [
+          ...prevMessages,
+          { text: "Bot is typing...", isSent: false, isTyping: true }
+        ]);
+  
+        setTimeout(() => {
+          let botResponse = "I'm sorry, I didn't understand that.";
+  
+          if (userMessage.toLowerCase().includes('book ticket')) {
+            botResponse = "Sure! How many tickets would you like to book?";
+          } else if (userMessage.match(/\d+\s*ticket/i)) {
+            botResponse = "Please provide the date for your visit (e.g., 2025-03-10).";
+          } else if (userMessage.match(/\d{4}-\d{2}-\d{2}/)) {
+            botResponse = "Got it! How would you like to pay? We accept online payments.";
+          } else if (userMessage.toLowerCase().includes('pay')) {
+            botResponse = "Payment successful! Your tickets have been booked.";
+          }
+  
+          // Remove "Bot is typing..." and add bot response
+          setMessages((prevMessages) => [
+            ...prevMessages.slice(0, -1), // Remove last "Bot is typing..."
+            { text: botResponse, isSent: false }
+          ]);
+        }, 1000); // Bot response delay
+      }, 500); // "Bot is typing..." delay
     }
   };
-
-  const handleKeyPress = (e) => {
-    if (e.key === 'Enter') {
-      handleSendMessage();
-    }
-  };
-
-  const getResponse = (message) => {
-    // Placeholder for actual server response logic
-    if (message.toLowerCase() === 'hi') {
-      return 'How can I help you?';
-    }
-    return 'This is a placeholder response from the server.';
-  };
+  
 
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
-  }, [messages]);
+    setTimeout(() => {
+      document.getElementById("chatbot-box").style.opacity = "1";
+      document.getElementById("chatbot-box").style.transform = "translate(-50%, -50%) scale(1)";
+    }, 200);
+  }, []);
+  
 
   return (
-    <Layout style={{ minHeight: '100vh' }} className={darkMode ? 'dark-mode' : ''}>
-      <Sider collapsible collapsed={collapsed} onCollapse={toggleCollapsed} theme={darkMode ? 'dark' : 'light'} style={{ height: '100vh', position: 'fixed', left: 0 }}>
-        {!collapsed && (
-          <div className="logo mt-2 p-1">
-            <Title level={3} style={{color: darkMode ? '#fff' : '#000', transition: 'color 0.3s ease' }}>Museum Chatbot</Title>
-          </div>
-        )}
-        <Menu theme={darkMode ? 'dark' : 'light'} defaultSelectedKeys={['1']} mode="inline">
-          <Menu.Item key="1" icon={<MessageOutlined />}>New Chat</Menu.Item>
-          <Menu.Item key="2" icon={<HistoryOutlined />}>History</Menu.Item>
-          <Menu.Item key="3" icon={<SettingOutlined />}>Settings</Menu.Item>
-        </Menu>
-      </Sider>
-      <Layout style={{ marginLeft: collapsed ? 80 : 200 }}>
-        <Header style={{ background: darkMode ? '#001529' : '#fff', padding: '0 20px', display: 'flex', justifyContent: 'space-between', alignItems: 'center', transition: 'background 0.3s ease' }}>
-          {collapsed ? <MenuUnfoldOutlined onClick={toggleCollapsed} /> : <MenuFoldOutlined onClick={toggleCollapsed} />}
-          <Switch
-            checkedChildren={<BulbFilled />}
-            unCheckedChildren={<BulbOutlined />}
-            onChange={toggleDarkMode}
+    <Layout style={{ minHeight: '100vh', background: "url('/museum-bg.jpg') center/cover no-repeat" }}>
+      {/* Home Button */}
+      <Button 
+        type="default" 
+        onClick={() => window.location.href = '/'} 
+        style={{ position: 'absolute', top: '20px', right: '20px', zIndex: 1100 }}>
+        <HomeOutlined /> Home
+      </Button>
+
+      {/* Chatbot (Always Open) */}
+      {/* Chatbot (Always Open) */}
+<div
+  style={{
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%) scale(0.9)', /* Start smaller */
+    width: '1050px',
+    height: '600px',
+    background: 'rgba(255, 255, 255, 0.8)',
+    borderRadius: '10px',
+    display: 'flex',
+    flexDirection: 'column',
+    boxShadow: '0px 4px 10px rgba(0, 0, 0, 0.2)',
+    zIndex: 1200,
+    opacity: 0, /* Initially hidden */
+    transition: 'opacity 0.5s ease-out, transform 0.5s ease-out', /* Smooth animation */
+  }}
+  id="chatbot-box"
+>
+
+        <div style={{ padding: '10px', borderBottom: '1px solid #ccc', background: 'rgba(255, 255, 255, 0.5)' }}>
+          <strong>Chatbot for Museum Ticket Booking</strong>
+        </div>
+        <div style={{ flex: 1, padding: '10px', overflowY: 'auto' }}>
+          {messages.map((msg, index) => (
+            <MessageBubble key={index} text={msg.text} isSent={msg.isSent} />
+          ))}
+          <div ref={messagesEndRef} />
+        </div>
+        <div style={{ padding: '10px', borderTop: '1px solid #ccc', display: 'flex' }}>
+          <input
+            value={inputValue}
+            onChange={(e) => setInputValue(e.target.value)}
+            placeholder="Type your message..."
+            onKeyDown={(e) => e.key === 'Enter' && handleSendMessage()}
+            style={{ flex: 1, padding: '8px', border: 'none', outline: 'none' }}
           />
-        </Header>
-        <Content style={{ background: darkMode ? '#141414' : '#fff', position: 'relative', overflow: 'hidden', height: 'calc(100vh - 64px)', transition: 'background 0.3s ease' }}>
-          <div className="content-container" style={{ paddingBottom: '60px', overflowY: 'auto', height: '100%' }}>
-            {messages.map((msg, index) => (
-              <MessageBubble key={index} message={msg.text} isSent={msg.isSent} />
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-          <div className={`input-container ${darkMode ? 'dark-mode' : 'light-mode'}`} style={{ width: collapsed ? 'calc(100% - 80px)' : 'calc(100% - 300px)', position: 'fixed', bottom: '10px', left: collapsed ? '80px' : '200px', transition: 'width 0.3s ease' }}>
-            <Input
-              placeholder="Type a message..."
-              value={inputValue}
-              onChange={(e) => setInputValue(e.target.value)}
-              onKeyPress={handleKeyPress}
-              style={{ flex: 1, marginRight: '10px' }}
-            />
-            <Button type="primary" icon={<SendOutlined />} onClick={handleSendMessage} style={{ background: darkMode ? '#333' : '#1890ff', color: darkMode ? '#fff' : '#fff', transition: 'background 0.3s ease, color 0.3s ease' }} />
-          </div>
-        </Content>
-      </Layout>
+          <Button type="primary" onClick={handleSendMessage} style={{ marginLeft: '10px' }}>
+            Send
+          </Button>
+        </div>
+      </div>
+
+      {/* Footer */}
+      <Footer style={{
+        textAlign: 'center',
+        position: 'absolute',
+        bottom: '0',
+        width: '100%',
+        background: 'rgba(0, 0, 0, 0.7)',
+        color: '#fff',
+        padding: '10px',
+      }}>
+        © {new Date().getFullYear()} Museum Chatbot. Created by Sushant , Suruchi , Vaibhavi , Akash . All rights reserved.
+      </Footer>
     </Layout>
   );
 };
 
-export default ChatbotApp;
+export default MuseumApp;

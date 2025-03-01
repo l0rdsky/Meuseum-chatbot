@@ -1,47 +1,65 @@
-@import "tailwindcss";
-
-.input-container {
-  position: fixed;
-  bottom: 10px;
-  display: flex;
-  align-items: center;
-  padding: 10px 20px;
-  border-radius: 10px;
-  transition: width 0.3s ease;
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
 }
 
-.input-container.light-mode {
-  background: #fff;
+.main-container {
+  width: 100vw;
+  height: 100vh;
+  background-size: cover;
+  background-position: center;
+  position: relative;
 }
 
-.input-container.dark-mode {
-  background: #141414;
+.chat-bubble:hover {
+  transform: scale(1.1);
 }
 
-.input-container input {
-  background: #fff;
-  color: #000;
+.chat-bubble {
+  transition: transform 0.3s ease-in-out;
 }
 
-.input-container input::placeholder {
-  color: #000; /* Default placeholder color for light mode */
+.chat-box {
+  background-color: white;
+  color: black;
 }
 
-.input-container.dark-mode input {
-  background: #333;
-  color: #fff;
+.ant-btn-primary {
+  background-color: #C70039 !important; /* Deep Red */
+  border-color: #C70039 !important;
 }
 
-.input-container.dark-mode input::placeholder {
-  color: #fff; /* Placeholder color for dark mode */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.content-container {
-  overflow-y: auto;
-  scrollbar-width: none; /* For Firefox */
+body {
+  animation: fadeIn 1s ease-in-out;
+}
+/* @keyframes backgroundZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
 }
 
-.content-container::-webkit-scrollbar {
-  display: none; /* For Chrome, Safari, and Opera */
+.museum-background {
+  animation: backgroundZoom 5s ease-in-out infinite alternate;
+} */
+
+@keyframes floatEffect {
+  0% { transform: translate(-50%, -50%) translateY(0); }
+  50% { transform: translate(-50%, -50%) translateY(-5px); }
+  100% { transform: translate(-50%, -50%) translateY(0); }
 }
 
+#chatbot-box {
+  animation: floatEffect 3s ease-in-out infinite;
+}
