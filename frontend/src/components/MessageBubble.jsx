@@ -1,32 +1,38 @@
-// import React from 'react';
-import { Typography } from 'antd';
-import PropTypes from 'prop-types';
+import React from 'react';
 
-const { Text } = Typography;
-
-const MessageBubble = ({ message, isSent }) => {
+const MessageBubble = ({ text, isSent }) => {
   return (
-    <div style={{
-      display: 'flex',
-      justifyContent: isSent ? 'flex-end' : 'flex-start',
-      marginBottom: '10px'
+    <div style={{ 
+      display: 'flex', 
+      justifyContent: isSent ? 'flex-end' : 'flex-start', 
+      marginBottom: '10px', 
+      alignItems: 'center'
     }}>
+      {!isSent && (
+        <img 
+          src="/bot-avatar.png" 
+          alt="Bot" 
+          style={{ width: '40px', height: '40px', borderRadius: '50%', marginRight: '10px' }}
+        />
+      )}
       <div style={{
-        margin: '20px',
-        maxWidth: '60%',
-        padding: '15px',
+        background: isSent ? '#d6556c' : '#e2c5ca',
+        color: isSent ? '#fff' : '#000',
+        padding: '10px',
         borderRadius: '10px',
-        background: isSent ? '#1890ff' : '#f1f1f1',
-        color: isSent ? '#fff' : '#000'
+        maxWidth: '70%',
       }}>
-        <Text>{message}</Text>
+        {text}
       </div>
+      {isSent && (
+        <img 
+          src="/user-avatar.png" 
+          alt="User" 
+          style={{ width: '40px', height: '40px', borderRadius: '50%', marginLeft: '10px' }}
+        />
+      )}
     </div>
   );
-};
-MessageBubble.propTypes = {
-  message: PropTypes.string.isRequired,
-  isSent: PropTypes.bool.isRequired,
 };
 
 export default MessageBubble;
