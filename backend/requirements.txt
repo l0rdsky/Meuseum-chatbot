@@ -1,5 +1,8 @@
-fastapi          # FastAPI framework for building APIs
-uvicorn          # ASGI server for running FastAPI
-pymongo          # MongoDB client for database operations
-pydantic         # Data validation and settings management
-fastapi[all]     # For CORS and other middlewares
+fastapi>=0.68.0
+uvicorn>=0.15.0
+python-multipart
+pydantic>=1.8.0
+python-dotenv
+pymongo
+reportlab
+ollama 
