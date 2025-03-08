@@ -54,7 +54,7 @@ const Chat = () => {
                 setCurrentState(response.data.state);
                 setShowInitialOptions(!!response.data.show_initial_buttons);
                 setShowBookingOption(!!response.data.show_booking_option);
-                
+
                 if (response.data.booking_info) {
                     setBookingData(response.data.booking_info);
                 }
@@ -117,7 +117,7 @@ const Chat = () => {
 
             if (response.data) {
                 setCurrentState(response.data.state);
-                
+
                 if (response.data.booking_info) {
                     setBookingData(response.data.booking_info);
                 }
@@ -162,7 +162,7 @@ const Chat = () => {
         try {
             // Simulate payment processing
             await new Promise(resolve => setTimeout(resolve, 2000));
-            
+
             const response = await axios.post('http://localhost:5000/chat', {
                 message: 'payment_completed',
                 currentState: currentState
@@ -170,7 +170,7 @@ const Chat = () => {
 
             if (response.data) {
                 setCurrentState(response.data.state);
-                
+
                 if (response.data.ticket_data) {
                     setTicketData(response.data.ticket_data);
                 }
@@ -201,7 +201,7 @@ const Chat = () => {
     const handleDateSelect = (date) => {
         const formattedDate = date.toISOString().split('T')[0];
         setSelectedDate(date);
-        
+
         handleOptionClick(formattedDate);
         setShowDatePicker(false);
     };
@@ -225,11 +225,11 @@ const Chat = () => {
             }
 
             const response = await axios.post(
-                'http://localhost:5000/generate-ticket', 
+                'http://localhost:5000/generate-ticket',
                 ticketData,
                 { responseType: 'blob' }
             );
-            
+
             const url = window.URL.createObjectURL(new Blob([response.data]));
             const link = document.createElement('a');
             link.href = url;
@@ -257,12 +257,12 @@ const Chat = () => {
 
     return (
         <Container maxWidth="md">
-            <Paper elevation={3} className="chat-container">
+            <Paper elevation={3} className="chat-container" style={{ backgroundColor: "#4a3728b8" }}>
                 <Box className="chat-messages" ref={chatContainerRef}>
                     {messages.map((message, index) => (
-                        <ChatMessage 
-                            key={index} 
-                            message={message} 
+                        <ChatMessage
+                            key={index}
+                            message={message}
                             onOptionClick={handleOptionClick}
                             disableOptions={disabledMessageIndexes.has(index)}
                         />
@@ -335,9 +335,9 @@ const Chat = () => {
                 </div>
             </Paper>
             {showTicketModal && ticketData && (
-                <TicketModal 
-                    bookingData={ticketData} 
-                    onClose={() => setShowTicketModal(false)} 
+                <TicketModal
+                    bookingData={ticketData}
+                    onClose={() => setShowTicketModal(false)}
                 />
             )}
         </Container>
