@@ -10,7 +10,7 @@ from database import DatabaseHandler
 
 logger = logging.getLogger(__name__)
 
-def get_bot_response(user_message, current_state='greeting'):
+def chatbot(user_message, current_state='greeting'):
     try:
         # Define conversation states and their corresponding responses
         states = {
