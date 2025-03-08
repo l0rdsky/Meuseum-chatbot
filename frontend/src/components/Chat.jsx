@@ -257,7 +257,7 @@ const Chat = () => {
 
     return (
         <Container maxWidth="md">
-            <Paper elevation={3} className="chat-container" style={{ backgroundColor: "#4a3728b8" }}>
+            <Paper elevation={3} className="chat-container" style={{ backgroundColor: "#4a3728b8", borderRadius: "15px"}}>
                 <Box className="chat-messages" ref={chatContainerRef}>
                     {messages.map((message, index) => (
                         <ChatMessage
