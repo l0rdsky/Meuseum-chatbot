@@ -1,0 +1,681 @@
+:root {
+  --primary-brown: #4A3728;    /* Darker brown from image */
+  --secondary-brown: #8B6B4E;  /* Lighter brown */
+  --gold: #C4A484;            /* Antique gold */
+  --cream: #F5E6D3;           /* Warm cream */
+  --text-dark: #2C1810;
+  --text-light: #FFF;
+  --overlay: rgba(0, 0, 0, 0.5);
+  --primary-color: #8B4513;     /* Rich Saddle Brown */
+  --secondary-color: #654321;   /* Dark Brown */
+  --accent-color: #C19A6B;     /* Antique Bronze */
+  --background-color: #F5F5DC; /* Beige */
+  --gold-color: #FFD700;       /* Pure Gold */
+  --success-color: #556B2F;    /* Dark Olive Green */
+  --error-color: #8B0000;      /* Dark Red */
+  --chat-bg: rgba(255, 255, 255, 0.98);
+  --message-user-bg: #8B4513;
+  --message-bot-bg: #FDF5E6;
+  --border-color: #DEB887;     /* Burly Wood */
+}
+
+body {
+  background-image: url('/museum-bg.jpg'); /* Add a subtle museum background */
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;
+  margin: 0;
+  font-family: 'Playfair Display', serif; /* More elegant font */
+}
+
+.chat-container {
+  max-width: 800px;
+  margin: 2rem auto;
+  background: var(--chat-bg);
+  border-radius: 12px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+  padding: 1.5rem;
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid var(--border-color);
+}
+
+.chat-messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  padding: 1rem;
+  background: var(--background-color);
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
+.chat-message {
+  margin: 1rem 0;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
+  max-width: 80%;
+  white-space: pre-line;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.user-message {
+  background: var(--message-user-bg);
+  color: white;
+  margin-left: auto;
+  border-bottom-right-radius: 4px;
+}
+
+.bot-message {
+  background: var(--message-bot-bg);
+  border: 1px solid var(--border-color);
+  margin-right: auto;
+  border-bottom-left-radius: 4px;
+}
+
+.chat-input-container {
+  padding: 1rem;
+  background: white;
+  border-top: 1px solid #eee;
+  border-radius: 0 0 12px 12px;
+}
+
+.chat-input-form {
+  display: flex;
+  gap: 1rem;
+}
+
+.chat-input {
+  flex-grow: 1;
+  padding: 0.8rem;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  font-size: 1rem;
+}
+
+.chat-input:focus {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 2px rgba(230, 126, 34, 0.1);
+}
+
+.send-button {
+  padding: 0.8rem 1.5rem;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+  font-weight: 500;
+}
+
+.send-button:hover {
+  background: #d35400;
+}
+
+.payment-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--success-color);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.payment-button:hover:not(:disabled) {
+  background: #219a52;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.payment-button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Scrollbar styling */
+.chat-messages::-webkit-scrollbar {
+  width: 6px;
+}
+
+.chat-messages::-webkit-scrollbar-track {
+  background: var(--background-color);
+}
+
+.chat-messages::-webkit-scrollbar-thumb {
+  background: #bdc3c7;
+  border-radius: 3px;
+}
+
+.chat-messages::-webkit-scrollbar-thumb:hover {
+  background: #95a5a6;
+}
+
+/* Animation for messages */
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chat-message {
+  animation: slideIn 0.3s ease-out;
+}
+
+/* Modal styles */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 12px;
+    max-width: 500px;
+    width: 90%;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: modalSlideIn 0.3s ease-out;
+}
+
+.ticket {
+    background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+    padding: 2rem;
+    border-radius: 8px;
+    border: 1px dashed var(--primary-color);
+}
+
+.ticket h2 {
+    text-align: center;
+    color: var(--primary-color);
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+}
+
+.ticket-details {
+    margin: 1.5rem 0;
+}
+
+.ticket-details p {
+    margin: 0.5rem 0;
+    font-size: 1rem;
+    color: var(--text-color);
+}
+
+.ticket-counts {
+    margin: 1rem 0;
+    padding: 1rem;
+    background: rgba(255, 255, 255, 0.5);
+    border-radius: 6px;
+}
+
+.total-amount {
+    font-size: 1.2rem;
+    color: var(--success-color);
+    margin-top: 1rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--primary-color);
+}
+
+.ticket-footer {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px dashed var(--primary-color);
+    font-size: 0.9rem;
+    color: var(--secondary-color);
+}
+
+.close-button {
+    margin-top: 1rem;
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    width: 100%;
+    font-size: 1rem;
+    transition: background 0.3s;
+}
+
+.close-button:hover {
+    background: var(--secondary-color);
+}
+
+@keyframes modalSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Add these styles */
+.date-picker {
+    width: 100%;
+    margin-bottom: 1rem;
+}
+
+.confirmation-buttons {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.confirm-button, .cancel-button {
+    flex: 1;
+    padding: 0.8rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.confirm-button {
+    background: var(--success-color);
+    color: white;
+}
+
+.confirm-button:hover {
+    background: #219a52;
+}
+
+.cancel-button {
+    background: var(--error-color);
+    color: white;
+}
+
+.cancel-button:hover {
+    background: #c0392b;
+}
+
+.date-picker-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 1rem;
+}
+
+.react-datepicker {
+    font-family: 'Playfair Display', serif !important;
+    border: 2px solid var(--border-color) !important;
+    border-radius: 8px;
+}
+
+.react-datepicker__header {
+    background: var(--primary-color) !important;
+    border-bottom: 2px solid var(--border-color) !important;
+    color: white;
+    border-radius: 8px 8px 0 0;
+}
+
+.react-datepicker__current-month {
+    color: white;
+}
+
+.react-datepicker__day--selected {
+    background-color: var(--accent-color) !important;
+}
+
+.react-datepicker__day:hover {
+    background-color: var(--background-color);
+}
+
+/* Add styles for download button */
+.download-button {
+    background: var(--accent-color);
+    color: white;
+    border: none;
+    padding: 1rem 2rem;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-family: 'Playfair Display', serif;
+}
+
+.download-button:hover {
+    background: var(--secondary-color);
+    transform: translateY(-1px);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.download-button:active {
+    transform: translateY(0);
+}
+
+/* Navbar Styles */
+.navbar {
+  background: rgba(74, 55, 40, 0.95); /* Semi-transparent primary brown */
+  height: 80px;
+  padding: 0 5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.nav-brand {
+  display: flex;
+  align-items: center;
+}
+
+.nav-brand a {
+  color: var(--text-light);
+  font-size: 1.8rem;
+  font-weight: 600;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+}
+
+.nav-logo {
+  height: 45px;
+  margin-right: 1rem;
+}
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 2.5rem;
+}
+
+.nav-links a {
+  color: var(--text-light);
+  text-decoration: none;
+  padding: 0.8rem 1.5rem;
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.book-tickets-link {
+  border: 2px solid var(--gold);
+  border-radius: 4px;
+}
+
+.book-tickets-link:hover {
+  background: var(--gold);
+  color: var(--primary-brown) !important;
+}
+
+/* Hero Section */
+.hero-section {
+  background-image: linear-gradient(var(--overlay), var(--overlay)), url('../assets/images/museum-bg.jpg');
+  height: 100vh;
+  margin-top: -80px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+}
+
+.hero-section h1 {
+  font-size: 4.5rem;
+  color: var(--text-light);
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+  margin-bottom: 1rem;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.hero-section p {
+  font-size: 1.8rem;
+  color: var(--gold);
+  margin-bottom: 2rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.book-ticket-btn {
+  background: transparent;
+  color: var(--text-light);
+  border: 2px solid var(--gold);
+  padding: 1rem 2.5rem;
+  font-size: 1.1rem;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.book-ticket-btn:hover {
+  background: var(--gold);
+  color: var(--primary-brown);
+}
+
+/* About Section */
+.about-section {
+  background: var(--cream);
+  padding: 6rem 0;
+}
+
+.about-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+.about-section h2 {
+  text-align: center;
+  color: var(--primary-brown);
+  font-size: 3rem;
+  margin-bottom: 3rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: var(--secondary-brown);
+}
+
+.about-text p {
+  margin-bottom: 1.5rem;
+}
+
+.museum-image img {
+  width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+/* Highlights Section */
+.highlights-section {
+  background: var(--text-light);
+  padding: 6rem 0;
+}
+
+.highlights-section h2 {
+  text-align: center;
+  color: var(--primary-brown);
+  font-size: 3rem;
+  margin-bottom: 4rem;
+  font-family: 'Playfair Display', serif;
+  font-weight: 700;
+}
+
+.highlights-grid {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2rem;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3rem;
+}
+
+.highlight-card {
+  background: var(--text-light);
+  border-radius: 0;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+.highlight-card:hover {
+  transform: translateY(-10px);
+}
+
+.highlight-card img {
+  width: 100%;
+  height: 250px;
+  object-fit: cover;
+}
+
+.highlight-card h3 {
+  color: var(--primary-brown);
+  font-size: 1.5rem;
+  font-weight: 600;
+  margin: 1.5rem 1.5rem 0.5rem;
+  font-family: 'Playfair Display', serif;
+}
+
+.highlight-card p {
+  color: var(--secondary-brown);
+  margin: 0 1.5rem 1.5rem;
+  line-height: 1.6;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .navbar {
+    padding: 1rem 2rem;
+  }
+
+  .hero-section h1 {
+    font-size: 3.5rem;
+  }
+
+  .hero-section p {
+    font-size: 1.5rem;
+  }
+
+  .about-section,
+  .highlights-section {
+    padding: 4rem 2rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .about-content {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+
+  .hero-section h1 {
+    font-size: 3rem;
+  }
+
+  .nav-links {
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .navbar {
+    padding: 1rem;
+  }
+
+  .nav-brand a span {
+    display: none;
+  }
+
+  .hero-section h1 {
+    font-size: 2.5rem;
+  }
+
+  .hero-section p {
+    font-size: 1.2rem;
+  }
+
+  .book-ticket-btn {
+    padding: 1rem 2rem;
+    font-size: 1.1rem;
+  }
+}
+
+/* Add icon styles */
+.nav-icon {
+  font-size: 2.2rem;
+  color: var(--gold);
+}
+
+/* Add these styles */
+.message-options {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+.option-button {
+    padding: 0.8rem 1.5rem;
+    background: var(--primary-brown);
+    color: white;
+    border: 2px solid var(--gold);
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+}
+
+.option-button:hover {
+    background: var(--gold);
+    color: var(--primary-brown);
+}
+
+/* Add these styles to your CSS */
+.option-button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    background-color: #ccc;
+}
+
+.message-options {
+    pointer-events: auto;
+}
+
+.message-options.disabled {
+    pointer-events: none;
+    opacity: 0.7;
+}

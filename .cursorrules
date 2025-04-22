@@ -1,0 +1,9 @@
+This is the working chatbot for museum ticket booking system and the backend is like a hardcoded and I want to make it work like a real chatbot and for that I want to use the open ai models like a gemini ai i will get the gemini api key to get the chatbot working. Make sure it will connect with the backend and can access the backend and the database and can also make the general queries like a human for example if the user wants to change the name and other details.
+The bot should be more generic and could handle the ticket booking system as a real system.
+
+Also keep in mind these things:
+-Dont change anything from the frontend 
+-Keep the UI same
+-Keep the backend flow same
+-Change the backend to make it use the gemini as a chatbot agent
+

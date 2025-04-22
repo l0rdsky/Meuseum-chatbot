@@ -1,0 +1,12 @@
+fastapi>=0.68.0
+uvicorn>=0.15.0
+python-multipart
+pydantic>=1.8.0
+python-dotenv
+pymongo
+reportlab
+ollama
+openai
+google-generativeai>=1.0.0
+flask
+flask-cors 
