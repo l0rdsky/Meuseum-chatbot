@@ -40,14 +40,11 @@ def chatbot(user_message, current_state='greeting'):
             }
         }
 
-        # Check if user wants to book tickets
         if current_state == 'greeting' and 'book' in user_message.lower():
             return {
                 'response': states['greeting']['response'],
                 'state': states['greeting']['next_state']
             }
-        
-        # If we're in a known state, move to the next state
         if current_state in states:
             return {
                 'response': states[current_state]['response'],
@@ -66,13 +63,6 @@ def chatbot(user_message, current_state='greeting'):
             'response': "I apologize, but I encountered an error. Please try again.",
             'state': 'greeting'
         }
-
-# Prices for different ticket types
-TICKET_PRICES = {
-    'adult': 20,
-    'student': 15,
-    'child': 10
-}
 
 class ChatbotService:
     def __init__(self):
